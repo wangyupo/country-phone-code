@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Country Code Phone</title>
+    <!-- jquery -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- jsonview -->
+    <link href="https://cdn.bootcss.com/jquery-jsonview/1.2.3/jquery.jsonview.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery-jsonview/1.2.3/jquery.jsonview.min.js"></script>
+    <style>
+        .box {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .box>div {
+            width: 500px;
+            height: 700px;
+            overflow: scroll;
+            box-sizing: border-box;
+        }
+
+        .box-content {
+            padding: 12px 20px;
+            border: 2px solid #606060;
+        }
+
+        .box-content .box-content-item span {
+            margin-right: 20px;
+        }
+
+        .box-json {
+            color: #000;
+            background-color: #f5f5f5;
+        }
+
+        #copy-content {
+            position: absolute;
+            top: -500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <!-- show codes -->
+        <div class="box-content">
+
+        </div>
+        <input type="text" id="copy-content" value="">
+        <div class="box-json">
+            <button id="collapse-btn">Collapse</button>
+            <button id="expand-btn">Expand</button>
+            <button id="toggle-btn">Toggle</button>
+            <button id="toggle-level1-btn">Toggle level1</button>
+            <button id="toggle-level2-btn">Toggle level2</button>
+            <button id="copy-btn">copy</button>
+            <div class="box-json-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // get data
+        $.ajax({
+            url: "./index.json",
+            success: function (data) {
+                // insert dom
+                data.map((item, idx) => {
+                    if (item.items.length) {
+                        $('.box-content').append("<h3>" + item.title + "</h3>");
+                        item.items.map((val, index) => {
+                            $('.box-content').append("<p class='box-content-item'><span>" +
+                                val.label +
+                                "</span><span>" +
+                                val.label_en +
+                                "</span><span>" + val.code + "</span></p>")
+                        })
+                    }
+                })
+
+                // show json
+                $('.box-json-content').JSONView(data, {
+                    collapsed: false,
+                    recursive_collapser: true
+                })
+
+                // copy json
+                $('#copy-content').val(JSON.stringify(data));
+            }
+        });
+
+        $('#collapse-btn').on('click', function () {
+            $('.json').JSONView('collapse');
+        });
+
+        $('#expand-btn').on('click', function () {
+            $('.json').JSONView('expand');
+        });
+
+        $('#toggle-btn').on('click', function () {
+            $('.json').JSONView('toggle');
+        });
+
+        $('#toggle-level1-btn').on('click', function () {
+            $('.json').JSONView('toggle', 1);
+        });
+
+        $('#toggle-level2-btn').on('click', function () {
+            $('.json').JSONView('toggle', 2);
+        });
+
+        $('#copy-btn').on('click', function () {
+            var inputText = document.getElementById('copy-content');
+            var currentFocus = document.activeElement;
+            inputText.focus();
+            inputText.setSelectionRange(0, inputText.value.length);
+            try {
+                if (document.execCommand("Copy", "false", null)) {
+                    alert("Copy Success!");
+                } else {
+                    alert("Copy Failed!");
+                }
+            } catch (err) {
+                alert("Error!")
+            }
+        });
+    </script>
+</body>
+
+</html>
