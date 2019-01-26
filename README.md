@@ -8,7 +8,7 @@ See 'index.html', and you can copy data from 'index.json' or use copy button in 
 
 ## It looks like
 
-<img src="./demo.gif" width="375">
+<img src="./demo.gif" width="750">
 
 ## support
 
