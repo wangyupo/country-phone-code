@@ -1,0 +1,40 @@
+.box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box>div {
+    width: 500px;
+    height: 700px;
+    overflow: scroll;
+    box-sizing: border-box;
+}
+
+.box-content {
+    padding: 12px 20px;
+    border: 2px solid #606060;
+}
+
+.box-content .box-content-item span {
+    margin-right: 20px;
+}
+
+.box-json {
+    color: #000;
+    background-color: #f5f5f5;
+}
+
+.box-features-item {
+    display: flex;
+    align-items: center;
+    height: 30px;
+}
+
+.box-features-item p {
+    width: 80px;
+}
+
+#copy-content {
+    position: absolute;
+    top: -500px;
+}

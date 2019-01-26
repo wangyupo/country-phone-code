@@ -11,38 +11,7 @@
     <!-- jsonview -->
     <link href="https://cdn.bootcss.com/jquery-jsonview/1.2.3/jquery.jsonview.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery-jsonview/1.2.3/jquery.jsonview.min.js"></script>
-    <style>
-        .box {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .box>div {
-            width: 500px;
-            height: 700px;
-            overflow: scroll;
-            box-sizing: border-box;
-        }
-
-        .box-content {
-            padding: 12px 20px;
-            border: 2px solid #606060;
-        }
-
-        .box-content .box-content-item span {
-            margin-right: 20px;
-        }
-
-        .box-json {
-            color: #000;
-            background-color: #f5f5f5;
-        }
-
-        #copy-content {
-            position: absolute;
-            top: -500px;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 
 <body>
@@ -51,7 +20,30 @@
         <div class="box-content">
 
         </div>
-        <input type="text" id="copy-content" value="">
+        <div class="box-features">
+            <h4>Change Yourself</h4>
+            <div class="box-features-item">
+                <p>title</p>
+                <input type="text" class="box-features-item-title">
+            </div>
+            <div class="box-features-item">
+                <p>items</p>
+                <input type="text" class="box-features-item-items">
+            </div>
+            <div class="box-features-item">
+                <p>label</p>
+                <input type="text" class="box-features-item-label">
+            </div>
+            <div class="box-features-item">
+                <p>label_en</p>
+                <input type="text" class="box-features-item-label-en">
+            </div>
+            <div class="box-features-item">
+                <p>code</p>
+                <input type="text" class="box-features-item-code">
+            </div>
+            <button class="box-features-btn">confirm</button>
+        </div>
         <div class="box-json">
             <button id="collapse-btn">Collapse</button>
             <button id="expand-btn">Expand</button>
@@ -61,74 +53,10 @@
             <button id="copy-btn">copy</button>
             <div class="box-json-content"></div>
         </div>
+        <input type="text" id="copy-content" value="">
     </div>
 
-    <script>
-        // get data
-        $.ajax({
-            url: "./index.json",
-            success: function (data) {
-                // insert dom
-                data.map((item, idx) => {
-                    if (item.items.length) {
-                        $('.box-content').append("<h3>" + item.title + "</h3>");
-                        item.items.map((val, index) => {
-                            $('.box-content').append("<p class='box-content-item'><span>" +
-                                val.label +
-                                "</span><span>" +
-                                val.label_en +
-                                "</span><span>" + val.code + "</span></p>")
-                        })
-                    }
-                })
-
-                // show json
-                $('.box-json-content').JSONView(data, {
-                    collapsed: false,
-                    recursive_collapser: true
-                })
-
-                // copy json
-                $('#copy-content').val(JSON.stringify(data));
-            }
-        });
-
-        $('#collapse-btn').on('click', function () {
-            $('.box-json-content').JSONView('collapse');
-        });
-
-        $('#expand-btn').on('click', function () {
-            $('.box-json-content').JSONView('expand');
-        });
-
-        $('#toggle-btn').on('click', function () {
-            $('.box-json-content').JSONView('toggle');
-        });
-
-        $('#toggle-level1-btn').on('click', function () {
-            $('.box-json-content').JSONView('toggle', 1);
-        });
-
-        $('#toggle-level2-btn').on('click', function () {
-            $('.box-json-content').JSONView('toggle', 2);
-        });
-
-        $('#copy-btn').on('click', function () {
-            var inputText = document.getElementById('copy-content');
-            var currentFocus = document.activeElement;
-            inputText.focus();
-            inputText.setSelectionRange(0, inputText.value.length);
-            try {
-                if (document.execCommand("Copy", "false", null)) {
-                    alert("Copy Success!");
-                } else {
-                    alert("Copy Failed!");
-                }
-            } catch (err) {
-                alert("Error!")
-            }
-        });
-    </script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
