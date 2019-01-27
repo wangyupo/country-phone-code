@@ -10,6 +10,6 @@ See 'index.html', and you can copy data from 'index.json' or use copy button in 
 
 <img src="./demo.gif" width="750">
 
-## support
+## Support
 
-you can email 1106774262@qq.com
+You can email 1106774262@qq.com
